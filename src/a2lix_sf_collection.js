@@ -28,6 +28,7 @@ a2lix_lib.sfCollection = (() => {
     })
   }
 
+
   const processCollectionElt = (
     collectionElt,
     manageRemoveEntry = false,
@@ -43,6 +44,8 @@ a2lix_lib.sfCollection = (() => {
     if (manageRemoveEntry) {
       appendEntryRemoveLink(collectionElt, lang)
     }
+
+
 
     collectionElt.addEventListener('click', evt =>
       configureCollectionElt(evt, manageRemoveEntry, lang)
@@ -92,6 +95,11 @@ a2lix_lib.sfCollection = (() => {
     switch (evt.target.getAttribute('data-entry-action')) {
       case 'add':
         addEntry(evt.currentTarget, evt.target, manageRemoveEntry, lang)
+        var event = new CustomEvent('addEntry');
+
+        // Dispatch the event
+        evt.target.dispatchEvent(event);
+        console.log(evt.target);
         break
       case 'remove':
         removeEntry(evt.currentTarget, evt.target)
@@ -123,6 +131,8 @@ a2lix_lib.sfCollection = (() => {
     }
 
     entryAddButton.parentElement.insertBefore(templateContent, entryAddButton)
+
+
   }
 
   const removeEntry = (collectionElt, entryRemoveButton) => {
